@@ -1,4 +1,4 @@
-import { ThemeConfig } from 'antd';
+import type { ThemeConfig } from 'antd';
 import { lightColors, darkColors, type LightColorPalette, type DarkColorPalette } from './colors';
 import { sharedComponentConfigs, sharedTokens, hexToRgba } from './utils';
 

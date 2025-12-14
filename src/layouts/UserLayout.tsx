@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
-import { Layout, Menu, Typography, Flex } from "antd";
+import { Layout, Menu, Typography } from "antd";
 import { useThemeStore } from "../stores/useThemeStore";
 import { lightColors, darkColors } from "../theme/colors";
 
