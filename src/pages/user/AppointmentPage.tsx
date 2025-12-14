@@ -1,21 +1,21 @@
 import { useState } from "react";
-import {
-  Box,
-  Typography,
-  Button,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  Chip,
-} from "@mui/material";
+import { Typography, Button, Table, Tag, Space, Flex } from "antd";
+import type { ColumnsType } from "antd/es/table";
+
+const { Title, Text } = Typography;
+
+interface Appointment {
+  id: number;
+  doctor: string;
+  date: string;
+  time: string;
+  status: string;
+  reason: string;
+}
 
 const UserAppointmentPage = () => {
   // Demo data
-  const [appointments] = useState([
+  const [appointments] = useState<Appointment[]>([
     {
       id: 1,
       doctor: "BS. Nguyễn Văn A",
@@ -60,71 +60,75 @@ const UserAppointmentPage = () => {
     }
   };
 
-  return (
-    <Box>
-      <Box sx={{ display: "flex", justifyContent: "space-between", alignItems: "center", mb: 3 }}>
-        <Typography variant="h4" component="h1">
-          Lịch hẹn của tôi
-        </Typography>
-        <Button variant="contained" color="primary">
-          Đặt lịch mới
-        </Button>
-      </Box>
+  const columns: ColumnsType<Appointment> = [
+    {
+      title: "Bác sĩ",
+      dataIndex: "doctor",
+      key: "doctor",
+    },
+    {
+      title: "Ngày",
+      dataIndex: "date",
+      key: "date",
+    },
+    {
+      title: "Giờ",
+      dataIndex: "time",
+      key: "time",
+    },
+    {
+      title: "Lý do",
+      dataIndex: "reason",
+      key: "reason",
+    },
+    {
+      title: "Trạng thái",
+      dataIndex: "status",
+      key: "status",
+      render: (status: string) => (
+        <Tag color={getStatusColor(status)}>{getStatusLabel(status)}</Tag>
+      ),
+    },
+    {
+      title: "Thao tác",
+      key: "action",
+      align: "right",
+      render: (_, record) => (
+        <Space>
+          <Button size="small">Chi tiết</Button>
+          {record.status === "pending" && (
+            <Button size="small" danger>
+              Hủy
+            </Button>
+          )}
+        </Space>
+      ),
+    },
+  ];
 
-      <TableContainer component={Paper}>
-        <Table>
-          <TableHead>
-            <TableRow>
-              <TableCell>Bác sĩ</TableCell>
-              <TableCell>Ngày</TableCell>
-              <TableCell>Giờ</TableCell>
-              <TableCell>Lý do</TableCell>
-              <TableCell>Trạng thái</TableCell>
-              <TableCell align="right">Thao tác</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {appointments.length === 0 ? (
-              <TableRow>
-                <TableCell colSpan={6} align="center">
-                  <Typography variant="body2" color="text.secondary" sx={{ py: 3 }}>
-                    Chưa có lịch hẹn nào
-                  </Typography>
-                </TableCell>
-              </TableRow>
-            ) : (
-              appointments.map((appointment) => (
-                <TableRow key={appointment.id}>
-                  <TableCell>{appointment.doctor}</TableCell>
-                  <TableCell>{appointment.date}</TableCell>
-                  <TableCell>{appointment.time}</TableCell>
-                  <TableCell>{appointment.reason}</TableCell>
-                  <TableCell>
-                    <Chip
-                      label={getStatusLabel(appointment.status)}
-                      color={getStatusColor(appointment.status) as any}
-                      size="small"
-                    />
-                  </TableCell>
-                  <TableCell align="right">
-                    <Button size="small" sx={{ mr: 1 }}>
-                      Chi tiết
-                    </Button>
-                    {appointment.status === "pending" && (
-                      <Button size="small" color="error">
-                        Hủy
-                      </Button>
-                    )}
-                  </TableCell>
-                </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
-      </TableContainer>
-    </Box>
+  return (
+    <div>
+      <Flex justify="space-between" align="center" style={{ marginBottom: 24 }}>
+        <Title level={2} style={{ margin: 0 }}>
+          Lịch hẹn của tôi
+        </Title>
+        <Button type="primary">Đặt lịch mới</Button>
+      </Flex>
+
+      <Table
+        columns={columns}
+        dataSource={appointments}
+        rowKey="id"
+        locale={{
+          emptyText: (
+            <Text type="secondary" style={{ padding: "24px 0" }}>
+              Chưa có lịch hẹn nào
+            </Text>
+          ),
+        }}
+      />
+    </div>
   );
 };
 
 export default UserAppointmentPage;
-

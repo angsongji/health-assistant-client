@@ -1,10 +1,17 @@
 import { useState } from "react";
-import { Box, Typography, TextField, Button, Paper, Link } from "@mui/material";
+import { Card, Typography, Input, Button, Space, Flex } from "antd";
 import { useNavigate } from "react-router-dom";
 import PATH from "../routers/path";
+import { useThemeStore } from "../stores/useThemeStore";
+import { lightColors, darkColors } from "../theme/colors";
+
+const { Title, Text } = Typography;
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const mode = useThemeStore((state) => state.mode);
+  const colors = mode === 'dark' ? darkColors : lightColors;
+  
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -26,76 +33,75 @@ const LoginPage = () => {
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
+    <Flex
+      align="center"
+      justify="center"
+      style={{
         minHeight: "100vh",
-        bgcolor: "background.default",
+        backgroundColor: colors.gray[100],
+        padding: "16px",
       }}
     >
-      <Paper
-        elevation={3}
-        sx={{
-          p: 4,
+      <Card
+        style={{
           width: "100%",
           maxWidth: 400,
+          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
         }}
       >
-        <Typography variant="h4" component="h1" gutterBottom align="center">
-          Đăng nhập
-        </Typography>
-        <Typography variant="body2" color="text.secondary" align="center" sx={{ mb: 3 }}>
-          Chào mừng trở lại!
-        </Typography>
+        <Space direction="vertical" size="large" style={{ width: "100%" }}>
+          <div style={{ textAlign: "center" }}>
+            <Title level={2} style={{ marginBottom: 8 }}>
+              Đăng nhập
+            </Title>
+            <Text type="secondary">Chào mừng trở lại!</Text>
+          </div>
 
-        <Box component="form" onSubmit={handleSubmit}>
-          <TextField
-            fullWidth
-            label="Email"
-            name="email"
-            type="email"
-            value={formData.email}
-            onChange={handleChange}
-            margin="normal"
-            required
-            autoComplete="email"
-          />
-          <TextField
-            fullWidth
-            label="Mật khẩu"
-            name="password"
-            type="password"
-            value={formData.password}
-            onChange={handleChange}
-            margin="normal"
-            required
-            autoComplete="current-password"
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Đăng nhập
-          </Button>
-          <Box sx={{ textAlign: "center" }}>
-            <Link
-              component="button"
-              type="button"
-              variant="body2"
-              onClick={() => navigate(PATH.SIGNUP)}
-            >
-              Chưa có tài khoản? Đăng ký ngay
-            </Link>
-          </Box>
-        </Box>
-      </Paper>
-    </Box>
+          <form onSubmit={handleSubmit}>
+            <Space direction="vertical" size="middle" style={{ width: "100%" }}>
+              <Input
+                size="large"
+                placeholder="Email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                autoComplete="email"
+              />
+              <Input.Password
+                size="large"
+                placeholder="Mật khẩu"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                required
+                autoComplete="current-password"
+              />
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                block
+                style={{ marginTop: 8 }}
+              >
+                Đăng nhập
+              </Button>
+              <div style={{ textAlign: "center" }}>
+                <Button
+                  type="link"
+                  onClick={() => navigate(PATH.SIGNUP)}
+                  style={{ padding: 0 }}
+                >
+                  Chưa có tài khoản? Đăng ký ngay
+                </Button>
+              </div>
+            </Space>
+          </form>
+        </Space>
+      </Card>
+    </Flex>
   );
 };
 
 export default LoginPage;
-

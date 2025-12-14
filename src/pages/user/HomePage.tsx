@@ -1,59 +1,52 @@
-import { Box, Typography, Card, CardContent } from "@mui/material";
+import { Typography, Card, Row, Col } from "antd";
+
+const { Title, Text } = Typography;
 
 const UserHomePage = () => {
   return (
-    <Box>
-      <Typography variant="h4" component="h1" gutterBottom>
+    <div>
+      <Title level={2} style={{ marginBottom: 8 }}>
         Trang chủ
-      </Typography>
-      <Typography variant="body1" color="text.secondary" sx={{ mb: 3 }}>
+      </Title>
+      <Text type="secondary" style={{ marginBottom: 24, display: "block" }}>
         Chào mừng đến với Health Assistant
-      </Typography>
+      </Text>
 
-      <Box
-        sx={{
-          display: 'grid',
-          gridTemplateColumns: {
-            xs: '1fr',
-            md: 'repeat(3, 1fr)',
-          },
-          gap: 3,
-        }}
-      >
-        <Card>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
+      <Row gutter={[24, 24]}>
+        <Col xs={24} md={8}>
+          <Card>
+            <Title level={4} style={{ marginBottom: 8 }}>
               Đặt lịch hẹn
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
+            </Title>
+            <Text type="secondary">
               Đặt lịch hẹn với bác sĩ một cách dễ dàng
-            </Typography>
-          </CardContent>
-        </Card>
+            </Text>
+          </Card>
+        </Col>
 
-        <Card>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
+        <Col xs={24} md={8}>
+          <Card>
+            <Title level={4} style={{ marginBottom: 8 }}>
               Lịch sử khám
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
+            </Title>
+            <Text type="secondary">
               Xem lại lịch sử khám bệnh của bạn
-            </Typography>
-          </CardContent>
-        </Card>
+            </Text>
+          </Card>
+        </Col>
 
-        <Card>
-          <CardContent>
-            <Typography variant="h6" gutterBottom>
+        <Col xs={24} md={8}>
+          <Card>
+            <Title level={4} style={{ marginBottom: 8 }}>
               Hồ sơ sức khỏe
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
+            </Title>
+            <Text type="secondary">
               Quản lý thông tin sức khỏe cá nhân
-            </Typography>
-          </CardContent>
-        </Card>
-      </Box>
-    </Box>
+            </Text>
+          </Card>
+        </Col>
+      </Row>
+    </div>
   );
 };
 

@@ -1,40 +1,40 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Typography, Button, Flex } from "antd";
 import { useNavigate } from "react-router-dom";
 import PATH from "../routers/path";
+
+const { Title, Text } = Typography;
 
 const NotFoundPage = () => {
   const navigate = useNavigate();
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
+    <Flex
+      vertical
+      align="center"
+      justify="center"
+      style={{
         minHeight: "100vh",
-        gap: 2,
+        gap: 16,
       }}
     >
-      <Typography variant="h1" component="h1" fontWeight="bold">
+      <Title level={1} style={{ margin: 0, fontWeight: "bold" }}>
         404
-      </Typography>
-      <Typography variant="h5" component="h2">
+      </Title>
+      <Title level={3} style={{ margin: 0 }}>
         Trang không tìm thấy
-      </Typography>
-      <Typography variant="body1" color="text.secondary">
+      </Title>
+      <Text type="secondary">
         Trang bạn đang tìm kiếm không tồn tại hoặc đã bị di chuyển.
-      </Typography>
+      </Text>
       <Button
-        variant="contained"
+        type="primary"
         onClick={() => navigate(PATH.HOME)}
-        sx={{ mt: 2 }}
+        style={{ marginTop: 8 }}
       >
         Về trang chủ
       </Button>
-    </Box>
+    </Flex>
   );
 };
 
 export default NotFoundPage;
-
