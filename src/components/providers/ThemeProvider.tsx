@@ -1,27 +1,32 @@
-import { ThemeProvider as MuiThemeProvider, StyledEngineProvider, CssBaseline } from '@mui/material';
+import { ConfigProvider, theme as antdTheme } from 'antd';
 import { useThemeStore } from '../../stores/useThemeStore';
 import { useMemo } from 'react';
 import { themeMap } from '../../types/themeType';
 
-
-
-
-
 /**
- * Theme Provider - sử dụng Zustand store
+ * Theme Provider - sử dụng Zustand store với Ant Design
  */
 export const ThemeProvider = ({ children }: { children: React.ReactNode }) => {
   const mode = useThemeStore((state) => state.mode);
 
-  const theme = useMemo(() => themeMap[mode], [mode]);
+  const themeConfig = useMemo(() => {
+    const config = themeMap[mode] || themeMap.light;
+    // Apply dark algorithm if dark mode
+    if (mode === 'dark') {
+      return {
+        ...config,
+        algorithm: antdTheme.darkAlgorithm,
+      };
+    }
+    return {
+      ...config,
+      algorithm: antdTheme.defaultAlgorithm,
+    };
+  }, [mode]);
   
   return (
-    <StyledEngineProvider injectFirst>
-      <MuiThemeProvider theme={theme}>
-        <CssBaseline />
-        {children}
-      </MuiThemeProvider>
-    </StyledEngineProvider>
+    <ConfigProvider theme={themeConfig}>
+      {children}
+    </ConfigProvider>
   );
 };
-

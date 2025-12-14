@@ -1,100 +1,91 @@
 import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
-import { Box, AppBar, Toolbar, Typography, Drawer, List, ListItem, ListItemButton, ListItemText } from "@mui/material";
+import { Layout, Menu, Typography, Flex } from "antd";
+import { useThemeStore } from "../stores/useThemeStore";
+import { lightColors, darkColors } from "../theme/colors";
+
+const { Header, Sider, Content } = Layout;
+const { Title } = Typography;
 
 // Demo layout đơn giản
 const UserLayout = () => {
+  const mode = useThemeStore((state) => state.mode);
+  const colors = mode === 'dark' ? darkColors : lightColors;
+
+  const menuItems = [
+    {
+      key: "1",
+      label: "Menu Item 1",
+    },
+    {
+      key: "2",
+      label: "Menu Item 2",
+    },
+  ];
+
   return (
-    <Box 
-      sx={{ 
-        display: 'flex', 
-        height: '100vh',
-        bgcolor: 'background.default' // Tự động: gray-100 (light) hoặc white (dark)
-      }}
-    >
+    <Layout style={{ minHeight: "100vh" }}>
       {/* Sidebar */}
-      <Drawer
-        variant="permanent"
-        sx={{
-          width: 240,
-          flexShrink: 0,
-          '& .MuiDrawer-paper': { 
-            width: 240, 
-            boxSizing: 'border-box',
-            bgcolor: 'custom.background.sidebar', // Tự động: white (light) hoặc blue-600 (dark)
-            color: 'text.primary', // Tự động điều chỉnh theo theme
-          },
+      <Sider
+        width={240}
+        style={{
+          backgroundColor: colors.background.sidebar,
+          color: colors.text.primary,
         }}
       >
-        <Toolbar>
-          <Typography 
-            variant="h6" 
-            sx={{ 
-              fontWeight: 'bold',
-              color: 'primary.main' // Tự động: blue-600 (light) hoặc white (dark)
+        <div style={{ padding: "16px" }}>
+          <Title
+            level={4}
+            style={{
+              margin: 0,
+              fontWeight: "bold",
+              color: colors.primary[600],
             }}
           >
             Dashboard
-          </Typography>
-        </Toolbar>
-        <List>
-          <ListItem>
-            <ListItemButton>
-              <ListItemText primary="Menu Item 1" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem>
-            <ListItemButton>
-              <ListItemText primary="Menu Item 2" />
-            </ListItemButton>
-          </ListItem>
-        </List>
-      </Drawer>
+          </Title>
+        </div>
+        <Menu
+          mode="inline"
+          items={menuItems}
+          style={{
+            backgroundColor: colors.background.sidebar,
+            color: colors.text.primary,
+            borderRight: 0,
+          }}
+        />
+      </Sider>
 
       {/* Main Content */}
-      <Box 
-        component="main" 
-        sx={{ 
-          flexGrow: 1, 
-          p: 3, 
-          display: 'flex', 
-          flexDirection: 'column',
-          bgcolor: 'background.default' // Tự động: gray-100 (light) hoặc white (dark)
-        }}
-      >
-        <AppBar 
-          position="static" 
-          sx={{ 
-            bgcolor: 'background.paper',
-            color: 'text.primary',
-            boxShadow: 1,
-            mb: 2
-          }} 
-          color="transparent"
-        >
-          <Toolbar>
-            <Typography variant="h6">Header</Typography>
-          </Toolbar>
-        </AppBar>
-        
-        {/* Render Page Content */}
-        <Box 
-          sx={{ 
-            flexGrow: 1, 
-            bgcolor: 'background.paper', // Tự động: white (light) hoặc blue-600 (dark)
-            color: 'text.primary', // Tự động điều chỉnh
-            borderRadius: 2,
-            boxShadow: 1,
-            p: 3,
-            overflow: 'auto'
+      <Layout>
+        <Header
+          style={{
+            backgroundColor: colors.background.paper,
+            color: colors.text.primary,
+            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+            marginBottom: 16,
           }}
         >
-           <Suspense fallback={<div>Loading Page...</div>}>
-             <Outlet />
-           </Suspense>
-        </Box>
-      </Box>
-    </Box>
+          <Title level={4} style={{ margin: 0, color: colors.text.primary }}>
+            Header
+          </Title>
+        </Header>
+        <Content
+          style={{
+            margin: "0 24px 24px",
+            padding: 24,
+            backgroundColor: colors.background.paper,
+            borderRadius: 8,
+            boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
+            overflow: "auto",
+          }}
+        >
+          <Suspense fallback={<div>Loading Page...</div>}>
+            <Outlet />
+          </Suspense>
+        </Content>
+      </Layout>
+    </Layout>
   );
 };
 

@@ -1,11 +1,18 @@
 import { Outlet } from "react-router-dom";
 import { Suspense } from "react";
-import { CircularProgress, Box } from "@mui/material";
+import { Spin, Flex } from "antd";
 
 const LoadingFallback = () => (
-  <Box className="h-screen w-full flex items-center justify-center bg-gray-50">
-    <CircularProgress />
-  </Box>
+  <Flex
+    align="center"
+    justify="center"
+    style={{
+      height: "100vh",
+      width: "100%",
+    }}
+  >
+    <Spin size="large" />
+  </Flex>
 );
 
 const RootLayout = () => {
