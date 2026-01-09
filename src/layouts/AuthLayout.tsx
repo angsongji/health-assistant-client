@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { Col } from "antd";
-import { motion, AnimatePresence, transform } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom";
 import PATH from "../routers/path";
 import AuthIntro from "../components/common/AuthIntro";
