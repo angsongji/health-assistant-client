@@ -656,7 +656,7 @@ const SignUpPage = () => {
         </Flex>
       </AuthLayout>
       {/* Mobile Intro - Only show on mobile */}
-      <div className="border!">
+      <div>
         <AuthIntroMobile />
       </div>
     </div>
