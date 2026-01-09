@@ -19,7 +19,6 @@ import {
   GoogleOutlined,
   FacebookFilled,
   CheckOutlined,
-  RobotOutlined,
   CaretRightOutlined,
   CaretLeftOutlined,
 } from "@ant-design/icons";
