@@ -12,7 +12,9 @@ interface AuthLayoutProps {
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
   const location = useLocation();
-  const isLoginPage = location.pathname === PATH.LOGIN;
+  // Check if current page is Login (both "/" and "/login")
+  const isLoginPage =
+    location.pathname === PATH.LOGIN || location.pathname === "/";
   const isMobile = useMediaQuery({ maxWidth: 767 });
   const durationTime: number = 0.4;
   // Animation variants cho form panel
@@ -109,7 +111,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
               exit="exit"
               style={{ height: "100%" }}
             >
-              <div className="flex flex-col">{children}</div>
+              <div className="flex flex-col min-h-screen">{children}</div>
             </motion.div>
           </AnimatePresence>
         </Col>
