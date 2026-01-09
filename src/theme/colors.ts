@@ -11,7 +11,7 @@ export const lightColors = {
     300: '#93c5fd',
     400: '#60a5fa',
     500: '#3b82f6',  // Blue-500
-    600: '#2563eb',  // Blue-600 - Màu chính (buttons, links)
+    600: '#0066CC',  // Blue-600 - Màu chính (buttons, links)
     700: '#1d4ed8',  // Blue-700 - Hover states
     800: '#1e40af',  // Blue-800
     900: '#1e3a8a',  // Blue-900 - Darkest
