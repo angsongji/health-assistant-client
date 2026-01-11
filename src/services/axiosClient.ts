@@ -7,7 +7,7 @@ const axiosClient = axios.create({
   },
   timeout: 10000,
 });
-``;
+;
 
 // Interceptor cho Request (Gắn Token)
 // axiosClient.interceptors.request.use(

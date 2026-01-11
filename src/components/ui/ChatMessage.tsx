@@ -1,5 +1,8 @@
 import { type ReactNode } from "react";
-
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypeRaw from "rehype-raw";
+import { isValidElement } from "react";
 interface ChatMessageProps {
   type: "ai" | "user";
   content: ReactNode;
@@ -129,6 +132,62 @@ export default function ChatMessage({
 }: ChatMessageProps) {
   const isAI = type === "ai";
 
+  const renderContent = () => {
+    if (isValidElement(content)) {
+      // Nếu là JSX (tin nhắn chào mừng)
+      return content;
+    }
+
+    // Nếu là String (tin nhắn AI)
+    return (
+      <ReactMarkdown
+        remarkPlugins={[remarkGfm]}
+        rehypePlugins={[rehypeRaw]}
+        components={{
+          // Tạo khung cho bảng và cho phép cuộn ngang trên mobile
+          table: ({ node, ...props }) => (
+            <div className="overflow-x-auto my-4 border border-gray-300 rounded-lg">
+              <table
+                className="min-w-full divide-y divide-gray-300"
+                {...props}
+              />
+            </div>
+          ),
+          // Style cho hàng tiêu đề
+          th: ({ node, ...props }) => (
+            <th
+              className="px-4 py-2 bg-gray-100 border border-gray-300 text-left text-xs font-semibold text-gray-700 uppercase"
+              {...props}
+            />
+          ),
+          // Style cho các ô nội dung
+          td: ({ node, ...props }) => (
+            <td
+              className="px-4 py-2 border border-gray-300 text-sm text-gray-600 vertical-top"
+              style={{ verticalAlign: "top" }} // Đảm bảo chữ nằm ở trên cùng của ô
+              {...props}
+            />
+          ),
+          // Định nghĩa lại danh sách không thứ tự (Dấu - hoặc *)
+          ul: ({ node, ...props }) => (
+            <ul className="list-disc ml-6 my-2 space-y-1" {...props} />
+          ),
+
+          // Định nghĩa lại danh sách có thứ tự (1. 2. 3.)
+          ol: ({ node, ...props }) => (
+            <ol className="list-decimal ml-6 my-2 space-y-1" {...props} />
+          ),
+
+          // Định nghĩa từng dòng trong danh sách
+          li: ({ node, ...props }) => (
+            <li className="text-sm text-gray-700" {...props} />
+          ),
+        }}
+      >
+        {String(content)}
+      </ReactMarkdown>
+    );
+  };
   return (
     <div className={`flex mb-4 ${isAI ? "flex-row" : "flex-row-reverse"}`}>
       {/* Avatar */}
@@ -169,7 +228,11 @@ export default function ChatMessage({
               : "bg-blue-600 text-white rounded-tr-none"
           }`}
         >
-          {content}
+          {isAI && content ? (
+            renderContent()
+          ) : (
+            <div className="whitespace-pre-wrap">{content}</div>
+          )}
           {event && event === "typing" && <TypingIndicator />}
           {/* <TypingIndicator /> */}
           {/* <HealthAlert

@@ -76,7 +76,7 @@ export default function ChatWindow() {
     const prompt = {
       prompt: text,
       // userId: 19,
-      // sessionId: 20260901214700
+      sessionId: 20260901214700,
     };
     try {
       // Add user message
@@ -109,10 +109,12 @@ export default function ChatWindow() {
 
       if (res.status === 200) {
         // Add user message
+        console.log("AI Response:", res.data[0]);
+        console.log("AI Response:", res.data.output);
         const aiMessage: Message = {
           id: crypto.randomUUID(),
           type: "ai",
-          content: res.data.reply,
+          content: res.data.output,
           timestamp: new Date().toLocaleTimeString("vi-VN", {
             hour: "2-digit",
             minute: "2-digit",
