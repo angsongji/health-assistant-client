@@ -1,43 +1,37 @@
-import type { ReactNode } from "react";
 import { Col } from "antd";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import PATH from "../routers/path";
 import AuthIntro from "../components/common/AuthIntro";
 import { useMediaQuery } from "react-responsive";
 
-interface AuthLayoutProps {
-  children: ReactNode;
-}
-
-const AuthLayout = ({ children }: AuthLayoutProps) => {
+const AuthLayout = () => {
   const location = useLocation();
   // Check if current page is Login (both "/" and "/login")
   const isLoginPage =
     location.pathname === PATH.LOGIN || location.pathname === "/";
   const isMobile = useMediaQuery({ maxWidth: 767 });
-  const durationTime: number = 0.4;
+  const durationTime: number = isMobile ? 0.2 : 0.5;
   // Animation variants cho form panel
   const formVariants = {
     initial: (isLogin: boolean) => ({
-      x: isLogin ? "100%" : "-100%",
+      x: isLogin ? "-100%" : "100%",
       opacity: 0,
     }),
     animate: {
       x: 0,
       opacity: 1,
       transition: {
-        delay: isMobile ? 0 : durationTime - 0.1,
+        delay: isMobile ? 0 : 0.1,
         duration: durationTime,
-        ease: [0.4, 0, 0.2, 1] as const,
+        ease: [0.43, 0.13, 0.23, 0.96] as const,
       },
     },
-    exit: (isLogin: boolean) => ({
-      x: isLogin ? 100 : -100,
+    exit: () => ({
       opacity: 0,
       transition: {
-        duration: durationTime,
-        ease: [0.4, 0, 0.2, 1] as const,
+        duration: 0,
+        ease: [0.43, 0.13, 0.23, 0.96] as const,
       },
     }),
   };
@@ -49,43 +43,53 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
     }),
     animate: {
       x: 0,
+      opacity: 1,
       transition: {
         duration: durationTime,
-        ease: [0.4, 0, 0.2, 1] as const,
+        ease: [0.43, 0.13, 0.23, 0.96] as const,
       },
     },
     exit: () => ({
+      opacity: 0,
       transition: {
-        duration: durationTime,
-        ease: [0.4, 0, 0.2, 1] as const,
+        duration: 0,
+        ease: [0.43, 0.13, 0.23, 0.96] as const,
       },
     }),
   };
 
   return (
-    <div style={{ minHeight: "100vh" }}>
-      <div className="flex relative min-w-screen max-h-screen overflow-x-hidden overflow-auto">
+    <div style={{ minHeight: "100vh", position: "relative" }}>
+      <div
+        className="flex relative min-h-screen w-full"
+        style={{ overflow: "hidden" }}
+      >
         {/* Intro Panel - Left for Login, Right for SignUp */}
         <Col
           xs={0}
           md={12}
           style={{
-            order: isLoginPage ? 1 : 2,
+            order: 2,
             minHeight: "100vh",
-            position: "sticky",
-            top: 0,
+            position: "relative",
             height: "100vh",
           }}
         >
-          <AnimatePresence mode="wait" custom={isLoginPage}>
+          <AnimatePresence mode="sync" custom={isLoginPage}>
             <motion.div
-              key={`intro-${location.pathname}`}
+              key={`intro-${isLoginPage ? "login" : "signup"}`}
               custom={isLoginPage}
               variants={introVariants}
               initial="initial"
               animate="animate"
               exit="exit"
-              style={{ height: "100%" }}
+              style={{
+                height: "100%",
+                width: "100%",
+                position: "absolute",
+                top: 0,
+                left: 0,
+              }}
             >
               <AuthIntro />
             </motion.div>
@@ -99,19 +103,31 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
           style={{
             order: isLoginPage ? 2 : 1,
             minHeight: "100vh",
+            position: "relative",
           }}
         >
-          <AnimatePresence mode="wait" custom={isLoginPage}>
+          <AnimatePresence
+            mode={isMobile ? "popLayout" : "sync"}
+            custom={isLoginPage}
+          >
             <motion.div
-              key={location.pathname}
+              key={`form-${isLoginPage ? "login" : "signup"}`}
               custom={isLoginPage}
               variants={formVariants}
               initial="initial"
               animate="animate"
               exit="exit"
-              style={{ height: "100%" }}
+              style={{
+                height: "100%",
+                width: "100%",
+                position: "absolute",
+                top: 0,
+                left: 0,
+              }}
             >
-              <div className="flex flex-col min-h-screen">{children}</div>
+              <div className="flex flex-col min-h-screen">
+                <Outlet />
+              </div>
             </motion.div>
           </AnimatePresence>
         </Col>

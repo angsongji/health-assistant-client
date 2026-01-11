@@ -1,8 +1,19 @@
 @import "tailwindcss";
 
 /* Reset cơ bản */
-html, body, #root {
+html,
+body,
+#root {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none; /* IE, Edge */
+  scrollbar-width: none; /* Firefox */
 }
