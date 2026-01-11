@@ -1,12 +1,13 @@
-import axios from 'axios';
+import axios from "axios";
 
 const axiosClient = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8080/api',
+  baseURL: import.meta.env.VITE_API_URL || "http://localhost:8080/api",
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
   timeout: 10000,
 });
+``;
 
 // Interceptor cho Request (Gắn Token)
 // axiosClient.interceptors.request.use(

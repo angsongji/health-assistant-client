@@ -5,6 +5,7 @@ import PATH from "./path";
 // Layouts
 import UserLayout from "../layouts/UserLayout";
 import RootLayout from "../layouts/RootLayout";
+import AuthLayout from "../layouts/AuthLayout";
 
 // Helper để lazy load mượt mà hơn (Optional)
 // const Loadable = (Component) => (props) => (
@@ -20,10 +21,13 @@ const SignUpPage = lazy(() => import("../pages/SignUpPage"));
 const UserAppointmentPage = lazy(() => import("../pages/user/AppointmentPage"));
 const UserHomePage = lazy(() => import("../pages/user/HomePage"));
 
+// Test
+const ChatWindow = lazy(() => import("../components/ui/ChatWindow"));
+
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootLayout />,
+    element: <AuthLayout />,
     errorElement: <NotFoundPage />,
     children: [
       {
@@ -40,7 +44,7 @@ const router = createBrowserRouter([
       },
     ],
   },
-  // Uss Routes
+  // User Routes
   {
     path: PATH.BASEPATH_USER,
     element: <UserLayout />, // Layout này nên chứa Sidebar của User
@@ -53,6 +57,22 @@ const router = createBrowserRouter([
       {
         path: PATH.USER_APPOINTMENT,
         element: <UserAppointmentPage />,
+      },
+    ],
+  },
+  // Test
+  {
+    path: PATH.BASEPATH_TEST,
+    element: <RootLayout />, // Layout này nên chứa Sidebar của User
+    errorElement: <NotFoundPage />,
+    children: [
+      {
+        index: true,
+        element: <ChatWindow />,
+      },
+      {
+        path: PATH.TEST_CHAT_WINDOW,
+        element: <ChatWindow />,
       },
     ],
   },

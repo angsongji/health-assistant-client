@@ -57,253 +57,245 @@ const LoginPage = () => {
   };
 
   return (
-    <AuthLayout>
-      <Flex
-        vertical
-        justify="center"
-        style={{
-          height: "100%",
-          background: `linear-gradient(135deg, #E6F3FF 0%, #FFFFFF 100%)`,
-        }}
-      >
-        <div className="w-full flex flex-col items-center!">
-          <div className="flex justify-center items-center py-7">
-            <Logo color={colors.primary[600]} />
-          </div>
-          <div
-            className="rounded-tr-3xl rounded-tl-3xl bg-white md:bg-transparent shadow-2xl! md:shadow-none!"
-            style={{ maxWidth: 500, width: "100%", padding: "2rem" }}
+    <Flex
+      vertical
+      justify="center"
+      style={{
+        background: `linear-gradient(135deg, #E6F3FF 0%, #FFFFFF 100%)`,
+      }}
+      className="h-screen"
+    >
+      <div className="w-full flex flex-col items-center! overflow-auto">
+        <div className="flex justify-center items-center py-7">
+          <Logo color={colors.primary[600]} />
+        </div>
+        <div
+          className="rounded-tr-3xl rounded-tl-3xl bg-white md:bg-transparent shadow-2xl! md:shadow-none!"
+          style={{ maxWidth: 500, width: "100%", padding: "2rem" }}
+        >
+          <Title
+            style={{ marginBottom: 8, color: colors.text.primary }}
+            className="text-2xl! md:text-3xl!"
           >
-            <Title
-              style={{ marginBottom: 8, color: colors.text.primary }}
-              className="text-2xl! md:text-3xl!"
-            >
-              Chào mừng trở lại
-            </Title>
-            <Text
-              style={{
-                marginBottom: 32,
-                display: "block",
-                fontSize: "1rem",
-                color: colors.text.secondary,
-              }}
-              className="text-sm! md:text-md!"
-            >
-              Đăng nhập để tiếp tục sử dụng dịch vụ
-            </Text>
+            Chào mừng trở lại
+          </Title>
+          <Text
+            style={{
+              marginBottom: 32,
+              display: "block",
+              fontSize: "1rem",
+              color: colors.text.secondary,
+            }}
+            className="text-sm! md:text-md!"
+          >
+            Đăng nhập để tiếp tục sử dụng dịch vụ
+          </Text>
 
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <Space
-                direction="vertical"
-                size="middle"
-                style={{ width: "100%" }}
-              >
-                <div>
-                  <Text
-                    strong
-                    style={{
-                      display: "block",
-                      marginBottom: 8,
-                      color: colors.text.secondary,
-                    }}
-                  >
-                    Số điện thoại
-                  </Text>
-                  <Controller
-                    name="phone"
-                    control={control}
-                    rules={{
-                      required: "Vui lòng nhập số điện thoại",
-                      pattern: {
-                        value: /^[0-9]{10}$/,
-                        message: "Số điện thoại không hợp lệ (10 chữ số)",
-                      },
-                    }}
-                    render={({ field }) => (
-                      <div>
-                        <Input
-                          {...field}
-                          size="large"
-                          placeholder="Nhập số điện thoại"
-                          prefix={
-                            <PhoneOutlined
-                              style={{ color: colors.text.tertiary }}
-                            />
-                          }
-                          autoComplete="tel"
-                          style={{ height: 48 }}
-                          status={errors.phone ? "error" : ""}
-                        />
-                        {errors.phone && (
-                          <Text type="danger" style={{ fontSize: "0.875rem" }}>
-                            {errors.phone.message}
-                          </Text>
-                        )}
-                      </div>
-                    )}
-                  />
-                </div>
-
-                <div>
-                  <Text
-                    strong
-                    style={{
-                      display: "block",
-                      marginBottom: 8,
-                      color: colors.text.secondary,
-                    }}
-                  >
-                    Mật khẩu
-                  </Text>
-                  <Controller
-                    name="password"
-                    control={control}
-                    rules={{
-                      required: "Vui lòng nhập mật khẩu",
-                      minLength: {
-                        value: 6,
-                        message: "Mật khẩu phải có ít nhất 6 ký tự",
-                      },
-                    }}
-                    render={({ field }) => (
-                      <div>
-                        <Input.Password
-                          {...field}
-                          size="large"
-                          placeholder="Nhập mật khẩu"
-                          prefix={
-                            <LockOutlined
-                              style={{ color: colors.text.tertiary }}
-                            />
-                          }
-                          iconRender={(visible) =>
-                            visible ? (
-                              <EyeTwoTone
-                                style={{ color: colors.text.tertiary }}
-                              />
-                            ) : (
-                              <EyeInvisibleOutlined
-                                style={{ color: colors.text.tertiary }}
-                              />
-                            )
-                          }
-                          autoComplete="current-password"
-                          style={{ height: 48 }}
-                          status={errors.password ? "error" : ""}
-                        />
-                        {errors.password && (
-                          <Text type="danger" style={{ fontSize: "0.875rem" }}>
-                            {errors.password.message}
-                          </Text>
-                        )}
-                      </div>
-                    )}
-                  />
-                </div>
-
-                <div className="flex justify-between items-center">
-                  <Controller
-                    name="remember"
-                    control={control}
-                    render={({ field }) => (
-                      <Checkbox
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Space direction="vertical" size="middle" style={{ width: "100%" }}>
+              <div>
+                <Text
+                  strong
+                  style={{
+                    display: "block",
+                    marginBottom: 8,
+                    color: colors.text.secondary,
+                  }}
+                >
+                  Số điện thoại
+                </Text>
+                <Controller
+                  name="phone"
+                  control={control}
+                  rules={{
+                    required: "Vui lòng nhập số điện thoại",
+                    pattern: {
+                      value: /^[0-9]{10}$/,
+                      message: "Số điện thoại không hợp lệ (10 chữ số)",
+                    },
+                  }}
+                  render={({ field }) => (
+                    <div>
+                      <Input
                         {...field}
-                        checked={field.value}
-                        style={{ color: colors.text.secondary }}
-                      >
-                        Ghi nhớ đăng nhập
-                      </Checkbox>
-                    )}
-                  />
-                  <Button
-                    type="link"
-                    style={{
-                      padding: 0,
-                      margin: 0,
-                      color: colors.primary[600],
-                      fontWeight: 600,
-                    }}
-                  >
-                    Quên mật khẩu?
-                  </Button>
-                </div>
+                        size="large"
+                        placeholder="Nhập số điện thoại"
+                        prefix={
+                          <PhoneOutlined
+                            style={{ color: colors.text.tertiary }}
+                          />
+                        }
+                        autoComplete="tel"
+                        style={{ height: 48 }}
+                        status={errors.phone ? "error" : ""}
+                      />
+                      {errors.phone && (
+                        <Text type="danger" style={{ fontSize: "0.875rem" }}>
+                          {errors.phone.message}
+                        </Text>
+                      )}
+                    </div>
+                  )}
+                />
+              </div>
 
+              <div>
+                <Text
+                  strong
+                  style={{
+                    display: "block",
+                    marginBottom: 8,
+                    color: colors.text.secondary,
+                  }}
+                >
+                  Mật khẩu
+                </Text>
+                <Controller
+                  name="password"
+                  control={control}
+                  rules={{
+                    required: "Vui lòng nhập mật khẩu",
+                    minLength: {
+                      value: 6,
+                      message: "Mật khẩu phải có ít nhất 6 ký tự",
+                    },
+                  }}
+                  render={({ field }) => (
+                    <div>
+                      <Input.Password
+                        {...field}
+                        size="large"
+                        placeholder="Nhập mật khẩu"
+                        prefix={
+                          <LockOutlined
+                            style={{ color: colors.text.tertiary }}
+                          />
+                        }
+                        iconRender={(visible) =>
+                          visible ? (
+                            <EyeTwoTone
+                              style={{ color: colors.text.tertiary }}
+                            />
+                          ) : (
+                            <EyeInvisibleOutlined
+                              style={{ color: colors.text.tertiary }}
+                            />
+                          )
+                        }
+                        autoComplete="current-password"
+                        style={{ height: 48 }}
+                        status={errors.password ? "error" : ""}
+                      />
+                      {errors.password && (
+                        <Text type="danger" style={{ fontSize: "0.875rem" }}>
+                          {errors.password.message}
+                        </Text>
+                      )}
+                    </div>
+                  )}
+                />
+              </div>
+
+              <div className="flex justify-between items-center">
+                <Controller
+                  name="remember"
+                  control={control}
+                  render={({ field }) => (
+                    <Checkbox
+                      {...field}
+                      checked={field.value}
+                      style={{ color: colors.text.secondary }}
+                    >
+                      Ghi nhớ đăng nhập
+                    </Checkbox>
+                  )}
+                />
                 <Button
-                  type="primary"
-                  htmlType="submit"
+                  type="link"
+                  style={{
+                    padding: 0,
+                    margin: 0,
+                    color: colors.primary[600],
+                    fontWeight: 600,
+                  }}
+                >
+                  Quên mật khẩu?
+                </Button>
+              </div>
+
+              <Button
+                type="primary"
+                htmlType="submit"
+                size="large"
+                block
+                loading={isSubmitting}
+                style={{
+                  height: 48,
+                  fontSize: "1rem",
+                  fontWeight: 600,
+                  marginTop: 8,
+                  letterSpacing: "0.05em",
+                }}
+                className="shadow-xl!"
+              >
+                Đăng nhập
+              </Button>
+
+              <Divider style={{ margin: "24px 0" }}>
+                <Text type="secondary">hoặc</Text>
+              </Divider>
+
+              <div className="flex justify-between gap-2 flex-col md:flex-row">
+                <Button
                   size="large"
-                  block
-                  loading={isSubmitting}
+                  icon={<GoogleOutlined style={{ color: colors.error.main }} />}
                   style={{
                     height: 48,
-                    fontSize: "1rem",
-                    fontWeight: 600,
-                    marginTop: 8,
-                    letterSpacing: "0.05em",
+                    borderColor: colors.border.default,
+                    color: colors.text.primary,
+                    flex: 1,
                   }}
-                  className="shadow-xl!"
+                  className="px-1! py-2!"
                 >
-                  Đăng nhập
+                  Google
                 </Button>
+                <Button
+                  size="large"
+                  icon={
+                    <FacebookFilled style={{ color: colors.primary[600] }} />
+                  }
+                  style={{
+                    height: 48,
+                    borderColor: colors.border.default,
+                    color: colors.text.primary,
+                    flex: 1,
+                  }}
+                  className="px-1! py-2!"
+                >
+                  Facebook
+                </Button>
+              </div>
 
-                <Divider style={{ margin: "24px 0" }}>
-                  <Text type="secondary">hoặc</Text>
-                </Divider>
-
-                <div className="flex justify-between gap-2 flex-col md:flex-row">
-                  <Button
-                    size="large"
-                    icon={
-                      <GoogleOutlined style={{ color: colors.error.main }} />
-                    }
-                    style={{
-                      height: 48,
-                      borderColor: colors.border.default,
-                      color: colors.text.primary,
-                      flex: 1,
-                    }}
-                    className="px-1! py-2!"
-                  >
-                    Google
-                  </Button>
-                  <Button
-                    size="large"
-                    icon={
-                      <FacebookFilled style={{ color: colors.primary[600] }} />
-                    }
-                    style={{
-                      height: 48,
-                      borderColor: colors.border.default,
-                      color: colors.text.primary,
-                      flex: 1,
-                    }}
-                    className="px-1! py-2!"
-                  >
-                    Facebook
-                  </Button>
-                </div>
-
-                <div style={{ textAlign: "center", marginTop: 24 }}>
-                  <Text type="secondary">Chưa có tài khoản? </Text>
-                  <Button
-                    type="link"
-                    onClick={() => navigate(PATH.SIGNUP)}
-                    style={{
-                      padding: 0,
-                      color: colors.primary[600],
-                      fontWeight: 600,
-                    }}
-                  >
-                    Đăng ký ngay
-                  </Button>
-                </div>
-              </Space>
-            </form>
-          </div>
+              <div style={{ textAlign: "center", marginTop: 24 }}>
+                <Text type="secondary">Chưa có tài khoản? </Text>
+                <Button
+                  type="link"
+                  onClick={() => navigate(PATH.SIGNUP)}
+                  style={{
+                    padding: 0,
+                    color: colors.primary[600],
+                    fontWeight: 600,
+                  }}
+                >
+                  Đăng ký ngay
+                </Button>
+              </div>
+            </Space>
+          </form>
         </div>
-        <Footer />
-      </Flex>
-    </AuthLayout>
+      </div>
+      <Footer />
+    </Flex>
   );
 };
 

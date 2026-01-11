@@ -44,8 +44,6 @@ export default function AuthIntro() {
           style={{
             width: "45%",
             margin: "0 auto 32px",
-            backgroundColor: "rgba(99, 102, 241, 0.1)",
-            borderRadius: "50%",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
